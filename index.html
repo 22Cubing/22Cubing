@@ -44,6 +44,35 @@
             padding: 10px;
             margin-top: 20px;
         }
+                /* New styles for the tab system */
+        .tabs {
+            overflow: hidden;
+            background-color: #f1f1f1;
+            border-radius: 10px 10px 0 0;
+        }
+        .tab-button {
+            background-color: inherit;
+            float: left;
+            border: none;
+            outline: none;
+            cursor: pointer;
+            padding: 14px 16px;
+            transition: 0.3s;
+            font-size: 17px;
+        }
+        .tab-button:hover {
+            background-color: #ddd;
+        }
+        .tab-button.active {
+            background-color: #4CAF50;
+            color: white;
+        }
+        .tab-content {
+            display: none;
+            padding: 20px;
+            border-radius: 0 0 10px 10px;
+            background-color: white;
+        }
     </style>
 </head>
 <body>
@@ -51,7 +80,18 @@
         <header>
             <h1>Welcome to our website!</h1>
         </header>
-        <div class="content">
+
+        <!-- New tab buttons -->
+        <div class="tabs">
+            <button class="tab-button active" onclick="openTab(event, 'Main')">Main</button>
+            <button class="tab-button" onclick="openTab(event, 'Videos')">Videos</button>
+            <button class="tab-button" onclick="openTab(event, 'Tutorials')">Tutorials</button>
+        </div>
+
+        <!-- Tab content -->
+        <div id="Main" class="tab-content" style="display: block;">
+            <h2>Welcome to the Colorful World of Rubik's Cubes!</h2>
+                    <div class="content">
             <h2>Also check out our Youtube channel, <a href="https://www.youtube.com/@22Cubing-id8un">22Cubing</a>. </h2>
             <img src="/api/placeholder/400/400" alt="Hello!" class="cube-image">
             <p>Our names are Rian and Peter and we love cubing.</p>
@@ -69,6 +109,36 @@
                 <p>Did you know? There are 43,252,003,274,489,856,000 possible ways to arrange the colors on a Rubik's Cube. That's more than 43 quintillion combinations!</p>
             </div>
         </div>
+
+        <div id="Videos" class="tab-content">
+            <h2>Cool Rubik's Cube Videos</h2>
+            <p>Check out these awesome Rubik's Cube videos!</p>
+            <!-- Add video content here -->
+        </div>
+
+        <div id="Tutorials" class="tab-content">
+            <h2>Learn to Solve the Cube</h2>
+            <p>Follow these tutorials to become a Rubik's Cube master!</p>
+            <!-- Add tutorial content here -->
+        </div>
+    </div>
+
+    <script>
+        function openTab(evt, tabName) {
+            var i, tabcontent, tabbuttons;
+            tabcontent = document.getElementsByClassName("tab-content");
+            for (i = 0; i < tabcontent.length; i++) {
+                tabcontent[i].style.display = "none";
+            }
+            tabbuttons = document.getElementsByClassName("tab-button");
+            for (i = 0; i < tabbuttons.length; i++) {
+                tabbuttons[i].className = tabbuttons[i].className.replace(" active", "");
+            }
+            document.getElementById(tabName).style.display = "block";
+            evt.currentTarget.className += " active";
+        }
+    </script>
+    
     </div>
 </body>
 </html>
