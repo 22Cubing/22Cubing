@@ -83,12 +83,12 @@
 
         <!-- Tab buttons -->
         <div class="tabs">
-            <button class="tab-button active" onclick="openTab(event, 'Main')">Main</button>
-            <button class="tab-button" onclick="openTab(event, 'Videos')">Videos</button>
-            <button class="tab-button" onclick="openTab(event, 'Tutorials')">Tutorials</button>
-            <button class="tab-button" onclick="openTab(event, 'Puzzles')">Puzzles</button>
-            <button class="tab-button" onclick="openTab(event, 'Algorithms')">Algorithms</button>
-            <button class="tab-button" onclick="openTab(event, 'Hardware')">Hardware</button>
+            <a href="#main"    class="tab-button active" onclick="openTab(event, 'Main')">Main</a>
+            <a href="#videos"  class="tab-button" onclick="openTab(event, 'Videos')">Videos</a>
+            <a href="#tutorials"  class="tab-button" onclick="openTab(event, 'Tutorials')">Tutorials</a>
+            <a href="#puzzles"  class="tab-button" onclick="openTab(event, 'Puzzles')">Puzzles</a>
+            <a href="#algorithms"  class="tab-button" onclick="openTab(event, 'Algorithms')">Algorithms</a>
+            <a href="#hardware"  class="tab-button" onclick="openTab(event, 'Hardware')">Hardware</a>
         </div>
 
         <!-- Tab content -->
@@ -148,6 +148,7 @@
 
     <script>
         function openTab(evt, tabName) {
+            evt.preventDefault();
             var i, tabcontent, tabbuttons;
             tabcontent = document.getElementsByClassName("tab-content");
             for (i = 0; i < tabcontent.length; i++) {
@@ -159,7 +160,26 @@
             }
             document.getElementById(tabName).style.display = "block";
             evt.currentTarget.className += " active";
+            
+            // Update URL fragment
+            history.pushState(null, null, evt.currentTarget.getAttribute('href'));
         }
+
+        // Function to open tab based on URL fragment
+        function openTabFromHash() {
+            var hash = window.location.hash.substring(1);
+            var tabName = hash.charAt(0).toUpperCase() + hash.slice(1);
+            var tab = document.getElementById(tabName);
+            if (tab) {
+                openTab({ preventDefault: function(){}, currentTarget: document.querySelector('a[href="#' + hash + '"]') }, tabName);
+            } else if (document.getElementById('Main')) {
+                openTab({ preventDefault: function(){}, currentTarget: document.querySelector('a[href="#main"]') }, 'Main');
+            }
+        }
+
+        // Call openTabFromHash on page load and when hash changes
+        window.addEventListener('load', openTabFromHash);
+        window.addEventListener('hashchange', openTabFromHash);
     </script>
         
 </body>
